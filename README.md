@@ -151,7 +151,7 @@ Ensure that the following are installed:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/library-management-system.git
+git clone https://github.com/dicksonkimathi839-del/library-management-system.git
 ```
 
 ### 2. Navigate to the API directory
