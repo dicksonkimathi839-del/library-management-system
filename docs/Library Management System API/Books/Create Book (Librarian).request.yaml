@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{baseUrl}}/books"
+method: POST
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "title": "Introduction to Programming",
+      "author": "John Smith",
+      "isbn": "9781234567890",
+      "totalCopies": 10,
+      "genreId": {{genreId}},
+      "description": "A beginner-friendly programming book.",
+      "publicationYear": 2024
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      if (pm.response.code === 201) {
+        const data = pm.response.json();
+        if (data.id) pm.collectionVariables.set('bookId', data.id);
+      }
+    language: text/javascript
+order: 1000

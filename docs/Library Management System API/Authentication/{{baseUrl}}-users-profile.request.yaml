@@ -1,0 +1,10 @@
+$kind: http-request
+name: "{{baseUrl}}/users/profile"
+description: ""
+url: "{{baseUrl}}/users/profile"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{token}}"
+order: 3000

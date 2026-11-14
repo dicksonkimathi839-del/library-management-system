@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/genres/{{genreId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Computer Science and IT",
+      "description": "Updated genre description."
+    }
+order: 4000

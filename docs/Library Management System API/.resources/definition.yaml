@@ -1,0 +1,8 @@
+$kind: collection
+description: Postman collection for authentication, user profile, genre management, and book management endpoints.
+variables:
+  baseUrl: http://localhost:3000
+  token: ""
+  email: ""
+  genreId: "1"
+  bookId: "1"

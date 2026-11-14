@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/books/{{bookId}}"
+method: PATCH
+headers:
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+body:
+  type: text
+  content: |-
+    {
+      "title": "Introduction to Programming - Revised",
+      "totalCopies": 12
+    }
+order: 6000

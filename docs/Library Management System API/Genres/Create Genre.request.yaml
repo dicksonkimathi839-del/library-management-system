@@ -1,0 +1,21 @@
+$kind: http-request
+url: "{{baseUrl}}/genres"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Computer Science",
+      "description": "Books about computing and technology."
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      if (pm.response.code === 201) {
+        const data = pm.response.json();
+        if (data.id) pm.collectionVariables.set('genreId', data.id);
+      }
+    language: text/javascript
+order: 1000
