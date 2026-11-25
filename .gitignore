@@ -13,3 +13,4 @@ postman/
 
 # Separate nested project
 /library-api/
+client/.env
