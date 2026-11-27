@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,14 +13,15 @@ enum Role {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(PATRON)
-  reviews   Review[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int            @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  password      String
+  role          Role           @default(PATRON)
+  reviews       Review[]
+  spaceBookings SpaceBooking[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model Genre {
@@ -34,17 +34,17 @@ model Genre {
 }
 
 model Book {
-  id              Int      @id @default(autoincrement())
+  id              Int     @id @default(autoincrement())
   title           String
   author          String
-  isbn            String   @unique
+  isbn            String  @unique
   description     String?
   publicationYear Int?
-  totalCopies     Int      @default(1)
-  availableCopies Int      @default(1)
+  totalCopies     Int     @default(1)
+  availableCopies Int     @default(1)
 
   genreId Int
-  genre   Genre    @relation(fields: [genreId], references: [id], onDelete: Restrict)
+  genre   Genre @relation(fields: [genreId], references: [id], onDelete: Restrict)
 
   reviews   Review[]
   createdAt DateTime @default(now())
@@ -56,19 +56,36 @@ model Book {
 }
 
 model Review {
-  id        Int      @id @default(autoincrement())
-  bookId    Int
-  userId    Int
-  rating    Int
-  comment   String?
+  id      Int     @id @default(autoincrement())
+  bookId  Int
+  userId  Int
+  rating  Int
+  comment String?
 
-  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([bookId, userId])
   @@index([bookId])
+  @@index([userId])
+}
+
+model SpaceBooking {
+  id        Int      @id @default(autoincrement())
+  space     String
+  date      DateTime @db.Date
+  startTime String
+  endTime   String
+  userId    Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([space, date])
   @@index([userId])
 }

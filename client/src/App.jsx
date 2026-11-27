@@ -1,7 +1,15 @@
-
 import { Routes, Route, Link } from "react-router-dom";
+
+import { ReadingListProvider } from "./context/ReadingListContext.jsx";
+
 import HomePage from "./pages/HomePage.jsx";
 import BookDetail from "./pages/BookDetail.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
+import SpaceBookingPage from "./pages/SpaceBookingPage.jsx";
+
+import Navbar from "./components/Navbar.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function NotFound() {
   return (
@@ -15,11 +23,30 @@ function NotFound() {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/books/:id" element={<BookDetail />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <ReadingListProvider>
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+
+        <Route path="/books/:id" element={<BookDetail />} />
+
+        <Route path="/login" element={<LoginPage />} />
+
+        <Route path="/register" element={<RegisterPage />} />
+
+        <Route
+          path="/space-booking"
+          element={
+            <ProtectedRoute>
+              <SpaceBookingPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </ReadingListProvider>
   );
 }
 

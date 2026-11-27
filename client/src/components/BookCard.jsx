@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useReadingList } from "../context/ReadingListContext.jsx";
 
 function BookCard({ book }) {
+  const { readingList, addBook, removeBook } = useReadingList();
+
   const available = Number(book.availableCopies ?? 0);
   const total = Number(book.totalCopies ?? 0);
 
@@ -9,6 +12,18 @@ function BookCard({ book }) {
   const title = book.title || "Untitled Book";
   const author = book.author || "Unknown Author";
   const genreName = book.genre?.name || "Uncategorized";
+
+  const isSaved = readingList.some(
+    (item) => String(item.id) === String(book.id)
+  );
+
+  const handleReadingList = () => {
+    if (isSaved) {
+      removeBook(book.id);
+    } else {
+      addBook(book);
+    }
+  };
 
   return (
     <article className="book-card">
@@ -39,9 +54,7 @@ function BookCard({ book }) {
           <span className="book-genre">{genreName}</span>
 
           {book.publicationYear && (
-            <span className="book-year">
-              {book.publicationYear}
-            </span>
+            <span className="book-year">{book.publicationYear}</span>
           )}
         </div>
 
@@ -58,6 +71,14 @@ function BookCard({ book }) {
             {available} of {total} copies available
           </span>
         </div>
+
+        <button
+          type="button"
+          className="reading-list-button"
+          onClick={handleReadingList}
+        >
+          {isSaved ? "✓ Remove from Reading List" : "+ Add to Reading List"}
+        </button>
 
         <Link to={`/books/${book.id}`} className="view-book-button">
           View Details
